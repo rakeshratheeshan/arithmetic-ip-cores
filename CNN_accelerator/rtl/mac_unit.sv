@@ -4,13 +4,13 @@ module mac_unit#(
 )(
     input logic clk,
     input logic rst_n,
-    input logic [DATA_WIDTH-1] pixel_i,
-    input logic [DATA_WIDTH-1] weight_i,
-    output logic [PROD_WIDTH-1] product_o
+    input logic signed [DATA_WIDTH-1:0] pixel_i,
+    input logic signed [DATA_WIDTH-1:0] weight_i,
+    output logic signed [PROD_WIDTH-1:0] product_o
 
 );
     // stage 1 a register interface between the input and the multiplier to innitiate DSP blocks.
-    logic signed [DATA_WIDTH-1] pixel_r, weight_r;
+    logic signed [DATA_WIDTH-1:0] pixel_r, weight_r;
 
 
     always_ff @(posedge clk or negedge rst_n) begin
@@ -29,7 +29,7 @@ module mac_unit#(
         if(!rst_n)
             product_o <= '0;
         else
-            product_o <= pixel_i * weight_i;
+            product_o <= pixel_r * weight_r;
     end
 
 
